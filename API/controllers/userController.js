@@ -24,11 +24,9 @@ const createUser = async (req, res) => {
   }
 
   if (!password || password.length < 8) {
-    return res
-      .status(400)
-      .json({
-        message: "Password cannot be empty or less than 8 characthers!",
-      });
+    return res.status(400).json({
+      message: "Password cannot be empty or less than 8 characthers!",
+    });
   }
 
   // check if the user already exists
