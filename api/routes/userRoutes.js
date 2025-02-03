@@ -7,6 +7,11 @@ const adminMiddleware = require("../middleware/adminMiddleware");
 // > create a new user - POST > /api/users
 router.post("/", authMiddleware, adminMiddleware, userController.createUser);
 router.get("/", authMiddleware, adminMiddleware, userController.getAllUsers);
-router.delete("/:id", authMiddleware, adminMiddleware, userController.deleteUser);
+router.delete(
+  "/:id",
+  authMiddleware,
+  adminMiddleware,
+  userController.deleteUser
+);
 
 module.exports = router;
