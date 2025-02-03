@@ -10,18 +10,27 @@ const login = async (req, res, next) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: "User not found - Please check that you have the right credentials!" });
+        .json({
+          message:
+            "User not found - Please check that you have the right credentials!",
+        });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid credentials - Check your password" });
+      return res
+        .status(400)
+        .json({ message: "Invalid credentials - Check your password" });
     }
 
-    const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
+    const token = jwt.sign(
+      { email: user.email, id: user._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      }
+    );
 
     const usertoReturn = {
       name: user.name,
@@ -48,7 +57,9 @@ const register = async (req, res, next) => {
     if (userExists) {
       return res
         .status(400)
-        .json({ message: "User already exists - Use a different email address" });
+        .json({
+          message: "User already exists - Use a different email address",
+        });
     }
 
     const encryptedPassword = await bcrypt.hash(password, 12);
@@ -59,11 +70,15 @@ const register = async (req, res, next) => {
     }
 
     if (password.length < 8) {
-      return res.status(400).json({ message: "Password should be at least 8 characters long" });
+      return res
+        .status(400)
+        .json({ message: "Password should be at least 8 characters long" });
     }
 
     if (name.length < 3) {
-      return res.status(400).json({ message: "Name should be at least 3 characters long" });
+      return res
+        .status(400)
+        .json({ message: "Name should be at least 3 characters long" });
     }
 
     const newUser = new User({

@@ -5,9 +5,10 @@ module.exports = async (req, res, next) => {
     const user = await User.findById(req.user.id);
 
     if (user.role !== "admin") {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized - You need to be an admin to perform this action!" });
+      return res.status(401).json({
+        message:
+          "Unauthorized - You need to be an admin to perform this action!",
+      });
     }
 
     next();
